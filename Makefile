@@ -25,4 +25,4 @@ $(P2NAME): $(P2OBJS) $(COBJS)
 	$(CC) $(P2OBJS) $(COBJS) $(CFLAGS) -o $(P2NAME)
 
 %.o: %.c $(INC)
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -o $@ -c $<  

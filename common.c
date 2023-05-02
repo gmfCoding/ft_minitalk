@@ -6,11 +6,12 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:38:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/02 13:02:06 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/02 15:22:11 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <signal.h>
 #include "common.h"
+#include <unistd.h>
 
 void	send_byte(int pid, char byte)
 {
@@ -18,7 +19,10 @@ void	send_byte(int pid, char byte)
 	int			i;
 	i = 0;
 	while (i < 8)
+	{
 		kill(pid, mode[byte >> i++ & 1]);
+		usleep(10);
+	}
 }
 
 int	ft_itoa(char *str)
