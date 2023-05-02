@@ -1,4 +1,5 @@
-program
+client
+server
 **/*.swp
 **/*.swo
 **/*.o
