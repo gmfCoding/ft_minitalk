@@ -1,6 +1,6 @@
 INC = common.h
 
-CSRCS = common.c ft_bzero.c ft_itoa.c ft_calloc.c ft_putnbr_fd.c utils.c
+CSRCS = src/common.c src/ft_bzero.c src/ft_itoa.c src/ft_calloc.c src/ft_putnbr_fd.c src/utils.c
 P1SRCS = client.c
 P2SRCS = server.c
 
@@ -11,7 +11,7 @@ P2OBJS = $(P2SRCS:.c=.o)
 P1NAME = client
 P2NAME = server
 
-CFLAGS = $(DFLAGS) -g
+CFLAGS = -I./ $(DFLAGS) -g
 #-Wall -Werror -Wextra
 CC = cc
 

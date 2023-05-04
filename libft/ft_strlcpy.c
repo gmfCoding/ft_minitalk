@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 17:32:49 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 17:47:18 by clovell          ###   ########.fr       */
+/*   Created: 2023/02/02 14:07:37 by clovell           #+#    #+#             */
+/*   Updated: 2023/03/09 16:03:11 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# include <stddef.h>
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	j;
 
-size_t	ft_strlen(const char *s);
-void	*ft_calloc(size_t count, size_t size);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_bzero(void *s, size_t n);
-int		ft_atoi(const char *str);
-void	ft_putnbr_fd(int n, int fd);
-int		ft_atoi(const char *s);
-void	ft_putstr(const char *str);
-#endif
+	j = 0;
+	i = ft_strlen(src);
+	while (j < i && j + 1 < dstsize)
+	{
+		dst[j] = src[j];
+		j++;
+	}
+	if (dstsize > 0)
+		dst[j] = '\0';
+	return (i);
+}

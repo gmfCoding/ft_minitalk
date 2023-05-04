@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 17:32:49 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 17:47:18 by clovell          ###   ########.fr       */
+/*   Created: 2023/03/07 13:13:50 by clovell           #+#    #+#             */
+/*   Updated: 2023/03/09 12:31:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# include <stddef.h>
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	int			i;
+	char		*cdst;
+	const char	*csrc;
 
-size_t	ft_strlen(const char *s);
-void	*ft_calloc(size_t count, size_t size);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_bzero(void *s, size_t n);
-int		ft_atoi(const char *str);
-void	ft_putnbr_fd(int n, int fd);
-int		ft_atoi(const char *s);
-void	ft_putstr(const char *str);
-#endif
+	cdst = (char *)dst;
+	csrc = (const char *)src;
+	if (cdst <= csrc || cdst >= csrc + len)
+		return (ft_memcpy(dst, (void *)src, len));
+	i = 1;
+	while (1)
+	{
+		cdst[len - i] = csrc[len - i];
+		if (len - i == 0)
+			break ;
+		i++;
+	}
+	return (dst);
+}

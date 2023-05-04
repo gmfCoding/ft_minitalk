@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 17:32:49 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 17:47:18 by clovell          ###   ########.fr       */
+/*   Created: 2023/03/07 10:48:55 by clovell           #+#    #+#             */
+/*   Updated: 2023/03/09 16:07:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stddef.h>
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# include <stddef.h>
+void	*ft_memcpy(void *dst, const void *src, size_t size)
+{
+	size_t	idx;
 
-size_t	ft_strlen(const char *s);
-void	*ft_calloc(size_t count, size_t size);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_bzero(void *s, size_t n);
-int		ft_atoi(const char *str);
-void	ft_putnbr_fd(int n, int fd);
-int		ft_atoi(const char *s);
-void	ft_putstr(const char *str);
-#endif
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	idx = 0;
+	while (idx < size)
+	{
+		((char *)dst)[idx] = ((char *)src)[idx];
+		idx++;
+	}
+	return (dst);
+}

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include <signal.h>
-#include "common.h"
 #include <unistd.h>
+#include "common.h"
 
 void	send_byte(int pid, char byte)
 {
@@ -45,8 +45,9 @@ void	recv_bit(char bit, int pid, void (*on_byte)(char, int))
 	on_byte(tmp, pid);
 }
 
-/* Returns the callback to be used by setup_recv, 
- * to set the function to be used call:
+/* Returns the callback to be used by the default implementation of...
+ * d_recv_bit and once that gets 8 bits it calls the 'on_byte' function.
+ * to set the function use:
  * on_byte_func(&func);
  * */
 t_bytefunc	on_byte_func(t_bytefunc on_byte)
@@ -58,31 +59,31 @@ t_bytefunc	on_byte_func(t_bytefunc on_byte)
 	return event;
 }
 
-/* Sets up the receiver functions,
- * When a is NULL it uses the on_byte_func to find the target callback.
- * Otherwise it uses a as it's target callback.
+/* Default implementation for recieve bits:
  * SEE on_byte_func
- * */
-struct sigaction setup_recv(void (*a)(int, struct __siginfo, void *))
+ */
+static void	d_recv_bit(int sig, siginfo_t *info, void *context)
 {
-	struct sigaction	sa;
+	if (sig == BIT_LOW)
+		recv_bit(0, info->si_pid, on_byte_func(NULL));
+	if (sig == BIT_HIGH)
+		recv_bit(1, info->si_pid, on_byte_func(NULL));
+}
+
+/* Sets up the receiver functions,
+ * When a is NULL it uses the d_recv_bit.
+ * Otherwise it uses the supplied 'func' as the bit/sig callback callback.
+ */
+struct sigaction setup_recv(void (*func)(int, siginfo_t *, void *))
+{
+	static struct sigaction	sa;
     
     sa.sa_flags = SA_SIGINFO;
-	if (a != NULL)
-		sa.sa_sigaction = a;
+	if (func != NULL)
+		sa.sa_sigaction = func;
 	else
-    	sa.sa_sigaction = on_byte_func(NULL);
+    	sa.sa_sigaction = d_recv_bit;
     sigaction(BIT_LOW, &sa, NULL);
     sigaction(BIT_HIGH, &sa, NULL);
 	return (sa);
 }
-
-/*void	recv_low(int pid, void (*on_byte)(char, int))
-{
-	recv_bit(0, pid, on_byte);
-}
-
-void	recv_high(int pid, void (*on_byte)(char, int))
-{
-	recv_bit(1, pid, on_byte);
-}*/

@@ -1,9 +1,9 @@
-RANDOM=$$
-for i in `seq $1`
-do
-	word="$word $RANDOM"
-done
+# RANDOM=$$
+# for i in `seq $1`
+# do
+# 	word="$word $RANDOM % 26"
+# done
+word=$(openssl rand -hex $1)
 set -x 
-./server &
-pid=$!
-echo "./client $pid \"\"" | xargs echo -n | pbcopy
+pid=$(ps a | grep "\.\/server" | awk '{print $1}')
+./client $pid "$word"
