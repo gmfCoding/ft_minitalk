@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:33:48 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 18:56:51 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/04 20:19:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -29,13 +29,7 @@ static void	s_recv_byte(char byte, int pid)
 	if (byte == MSG_EOT)
 	{
 		send_byte(MSG_ACK, pid);
-		ft_putstr("Sending Acl: ");
-		ft_putnbr_fd(getppid(), 1);
-		ft_putstr("\n");
-		ft_putstr("Sending Ack; ");
-		ft_putnbr_fd(getpid(), 1);
-		ft_putstr("\n");
-		ft_putstr("Sending Ack; ");
+		ft_putstr("Sending Ack: ");
 		ft_putnbr_fd(pid, 1);
 		ft_putstr("\n");
 	}
@@ -43,22 +37,13 @@ static void	s_recv_byte(char byte, int pid)
 		write(1, &byte, 1);
 }
 
-static void	s_recv_low(int pid)
-{
-	recv_low(pid, s_recv_byte);
-}
-
-static void	s_recv_high(int pid)
-{
-	recv_high(pid, s_recv_byte);
-}
 
 int	main(int argc, char **argv)
 {
 	int	self;
-
-	signal(BIT_LOW, s_recv_low);
-	signal(BIT_HIGH, s_recv_high);
+	
+	on_byte_func(s_recv_byte);
+	setup_recv(NULL);
 	self = getpid();
 	ft_putstr("Message Server: ");
 	ft_putnbr_fd(self, 1);

@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:33:03 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 18:32:38 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/04 20:16:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -29,7 +29,7 @@ static void	c_recv_byte(char byte, int pid)
 		acknowledged(1);
 	}
 }
-
+/*
 static void	c_recv_low(int pid)
 {
 	recv_low(pid, c_recv_byte);
@@ -39,6 +39,7 @@ static void	c_recv_high(int pid)
 {
 	recv_high(pid, c_recv_byte);
 }
+*/
 
 int	main(int argc, char **argv)
 {
@@ -47,8 +48,11 @@ int	main(int argc, char **argv)
 
 	if (argc < 3)
 		return (-1);
-	signal(BIT_LOW, c_recv_low);
-	signal(BIT_HIGH, c_recv_high);
+	//signal(BIT_LOW, c_recv_low);
+	//signal(BIT_HIGH, c_recv_high);
+	on_byte_func(c_recv_byte);
+	setup_recv(NULL);
+	
 	pid = ft_atoi(argv[1]);
 	str = argv[2];
 	while (*str)
