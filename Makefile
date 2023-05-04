@@ -1,6 +1,6 @@
 INC = common.h
 
-CSRCS = common.c utils.c
+CSRCS = common.c ft_bzero.c ft_itoa.c ft_calloc.c ft_putnbr_fd.c utils.c
 P1SRCS = client.c
 P2SRCS = server.c
 

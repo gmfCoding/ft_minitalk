@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:43 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 17:07:15 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/04 18:44:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,14 @@
 #  define BAUD_RATE 20000
 # endif
 
-int		ft_atoi(const char *s);
+# define MSG_ACK 0x006
+# define MSG_EOT 0x004
+
 void	send_byte(int pid, char byte);
-void	recv_bit(char bit, void (*on_byte)(char));
-void	recv_low(int pid, void (*on_byte)(char));
-void	recv_high(int pid, void (*on_byte)(char));
+void	recv_bit(char bit, int pid, void (*on_byte)(char, int));
+void	recv_low(int pid, void (*on_byte)(char, int));
+void	recv_high(int pid, void (*on_byte)(char, int));
+
+int		ft_atoi(const char *s);
+void	ft_putstr(const char *str);
 #endif

@@ -1,40 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 17:00:01 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 17:22:42 by clovell          ###   ########.fr       */
+/*   Created: 2023/03/14 14:36:41 by clovell           #+#    #+#             */
+/*   Updated: 2023/03/14 14:49:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 #include <unistd.h>
 
-int	ft_atoi(const char *s)
+static void	ft_putnbr_r(unsigned int nbr, int fd)
 {
-	int				mult;
-	unsigned int	accum;
-	char			*str;
+	char	c;
 
-	str = (char *)s;
-	accum = 0;
-	mult = 1;
-	while (*str > 9 && *str < 14)
-		str++;
-	if (*str == '-' || *str == '+')
-		if (*str++ == '-')
-			mult = -1;
-	while (*str >= '0' && *str <= '9')
+	if (nbr > 0)
 	{
-		accum = (accum * 10) + (*str - '0');
-		str++;
+		ft_putnbr_r(nbr / 10, fd);
+		c = nbr % 10 + '0';
+		write(fd, &c, 1);
 	}
-	return (accum * mult);
 }
 
-void	ft_putstr(const char *str)
+void	ft_putnbr_fd(int n, int fd)
 {
-	while (str && *str)
-		write(1, str++, 1);
+	unsigned int	un;
+
+	if (n == 0)
+	{
+		write(fd, "0", 1);
+		return ;
+	}
+	un = n;
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		un = -n;
+	}
+	ft_putnbr_r(un, fd);
 }

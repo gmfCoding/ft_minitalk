@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:38:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 16:53:21 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/04 18:12:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <signal.h>
@@ -17,6 +17,7 @@ void	send_byte(int pid, char byte)
 {
 	const int	mode[] = {BIT_LOW, BIT_HIGH};
 	int			i;
+
 	i = 0;
 	while (i < 8)
 	{
@@ -28,7 +29,7 @@ void	send_byte(int pid, char byte)
 /* Will execute on_byte when 8 bits have been recieved/processed.
  * tmp exists so we can clear data before the on_byte is called so that...
  * if on_byte fails the data has been cleared and subsequent calls work. */
-void	recv_bit(char bit, void (*on_byte)(char))
+void	recv_bit(char bit, int pid, void (*on_byte)(char, int))
 {
 	static char	data;
 	static int	i;
@@ -41,35 +42,15 @@ void	recv_bit(char bit, void (*on_byte)(char))
 	i = 0;
 	tmp = data;
 	data = 0;
-	on_byte(tmp);
+	on_byte(tmp, pid);
 }
 
-void	recv_low(int pid, void (*on_byte)(char))
+void	recv_low(int pid, void (*on_byte)(char, int))
 {
-	recv_bit(0, on_byte);
+	recv_bit(0, pid, on_byte);
 }
 
-void	recv_high(int pid, void (*on_byte)(char))
+void	recv_high(int pid, void (*on_byte)(char, int))
 {
-	recv_bit(1, on_byte);
-}
-
-int	ft_itoa(char *str)
-{
-	int mult;
-	unsigned int accum;
-
-	accum = 0;
-	mult = 1;
-	while (*str > 9 && *str < 14)
-		str++;
-	if (*str == '-' || *str == '+')
-		if (*str++ == '-')
-			mult = -1;
-	while (*str >= '0' && *str <= '9')
-	{	
-	    accum = (accum * 10) + (*str - '0');
-        str++;
-	}
-	return (accum * mult);
+	recv_bit(1, pid, on_byte);
 }
