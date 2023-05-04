@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:33:48 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/02 15:18:01 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/04 16:56:28 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -23,50 +23,33 @@ void print_byte(char byte)
 	printf("\n");
 }
 
-void	recv_byte(char byte)
+static void	s_recv_byte(char byte)
 {
-	//print_byte(byte);
-	printf("%c\n", byte);
-	//write(1, &byte, 1);
+	write(1, &byte, 1);
 }
 
-void	recv_bit(char bit)
+static void s_recv_low(int pid)
 {
-	static char	data;
-	static int	i;
-	data = data | ((bit & 1) << i);
-	i++;
-	if (i <= 7)
-		return ;
-	recv_byte(data);
-	i = 0;
-	data = 0;
+	recv_low(pid, s_recv_byte);
 }
 
-void	recv_low(int pid)
+static void s_recv_high(int pid)
 {
-	printf("0");
-	recv_bit(0);
-}
-
-void	recv_high(int pid)
-{
-	printf("1");
-	recv_bit(1);
+	recv_high(pid, s_recv_byte);
 }
 
 int	main(int argc, char **argv)
 {
 	int self;
 
-	signal(BIT_LOW, recv_low);
-	signal(BIT_HIGH, recv_high);
+	signal(BIT_LOW, s_recv_low);
+	signal(BIT_HIGH, s_recv_high);
 	self = getpid();
-	printf("SERVER... %d\n", self);
+	printf("SERVER... %d@%d\n", self, BAUD_RATE);
 
 	while (1)
 	{
-		usleep(1);
+		usleep(100);
 	}
 	return (0);
 }

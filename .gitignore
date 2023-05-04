@@ -3,6 +3,7 @@ server
 **/*.swp
 **/*.swo
 **/*.o
+**/*.out
 **/*.a
 **/obj/
 .git
