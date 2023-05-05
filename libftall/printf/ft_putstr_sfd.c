@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strchr.c                                           :+:      :+:    :+:   */
+/*   ft_putstr_sfd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 10:17:25 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/07 11:43:06 by clovell          ###   ########.fr       */
+/*   Created: 2023/04/05 14:28:07 by clovell           #+#    #+#             */
+/*   Updated: 2023/04/06 19:03:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <unistd.h>
 
-char	*ft_strchr(const char *s, int c)
+int	ft_putstr_sfd(const char *str, int fd)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	while (s[i] != '\0')
+	if (!str)
+		return (ft_putstr_sfd("(null)", fd));
+	len = 0;
+	while (str[len])
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
+		if (write(fd, &str[len], 1) < 0)
+			return (-1);
+		len++;
 	}
-	if (c == '\0')
-		return ((char *)&s[i]);
-	return (0);
+	return (len);
 }

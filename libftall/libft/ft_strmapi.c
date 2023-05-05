@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero_bad.c                                     :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 10:12:41 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/09 15:45:33 by clovell          ###   ########.fr       */
+/*   Created: 2023/03/14 14:09:03 by clovell           #+#    #+#             */
+/*   Updated: 2023/03/14 14:11:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stddef.h>
+#include "libft.h"
 
-void	ft_bzero(void *b, size_t n)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	while (n > 0)
+	char	*dup;
+	size_t	idx;
+
+	dup = ft_strdup(s);
+	if (dup == NULL)
+		return (NULL);
+	idx = 0;
+	while (dup[idx] != '\0')
 	{
-		n--;
-		((char *)b)[n] = 0;
+		dup[idx] = f(idx, dup[idx]);
+		idx++;
 	}
+	return (dup);
 }

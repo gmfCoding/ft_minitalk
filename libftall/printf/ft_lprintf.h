@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_lprintf.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 12:23:51 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/09 12:35:24 by clovell          ###   ########.fr       */
+/*   Created: 2023/04/05 14:34:36 by clovell           #+#    #+#             */
+/*   Updated: 2023/04/06 19:01:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-typedef unsigned char	t_uchar;
+#ifndef FT_LPRINTF_H
+# define FT_LPRINTF_H
 
-void	*ft_memchr(const void *s, int c, size_t n)
-{
-	int				e;
-	const t_uchar	*us;
-	t_uchar			uc;
-
-	if (n == 0)
-		return (0);
-	e = n;
-	us = (const t_uchar *)s;
-	uc = (t_uchar)c;
-	while (us[e - n] != uc)
-	{
-		if (e - n == n - 1)
-			return (0);
-		e++;
-	}	
-	return ((void *)&s[e - n]);
-}
+int	ft_putchar_sfd(char c, int fd);
+int	ft_putstr_sfd(const char *str, int fd);
+int	ft_puthex_sfd(unsigned long long number, int capital, int h64, int fd);
+int	ft_putnb_sfd(long long number, int negative, int i64, int fd);
+#endif

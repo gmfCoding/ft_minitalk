@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 13:13:14 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/06 18:13:30 by clovell          ###   ########.fr       */
+/*   Created: 2023/03/14 14:14:24 by clovell           #+#    #+#             */
+/*   Updated: 2023/03/14 14:15:03 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-int	ft_tolower(int c)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	if (c >= 'A' && c <= 'Z')
-		c += 32;
-	return (c);
+	size_t	idx;
+
+	idx = 0;
+	while (s[idx] != '\0')
+	{
+		f(idx, &s[idx]);
+		idx++;
+	}
 }

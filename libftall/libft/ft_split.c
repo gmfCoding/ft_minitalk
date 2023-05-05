@@ -6,34 +6,38 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 12:25:39 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/10 18:13:47 by clovell          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:34:59 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 #include <stdlib.h>
 
-/* Finds the amount of unique occurannces of end within str, unique occurance:
- * A single or contiguous elements of end characters counts as a group. */
-static size_t	find_grouped_occurances(const char *str, char end)
+static char	**cleanup(char **indices)
 {
-	size_t	size;
+	char	**start;
 
-	size = (*str != end && *str);
-	while (*str && *(str + 1))
+	if (!indices)
+		return (NULL);
+	start = indices;
+	while (*start)
 	{
-		if (*str == end && *(str + 1) != end)
-			size++;
-		str++;
+		free(*start);
+		start++;
 	}
-	return (size);
+	free(indices);
+	return (NULL);
 }
 
 /* Copies the content of source into dest by len. */
-static void	strldup(char **dest, const char *source, size_t len)
-{	
-	*dest = ft_calloc(len + 1, sizeof(char));
-	if (*dest != NULL)
-		ft_strlcpy(*dest, source, len + 1);
+static void	*strldup(const char *source, size_t len)
+{
+	char	*dest;
+
+	dest = ft_calloc(len + 1, sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	ft_strlcpy(dest, source, len + 1);
+	return (dest);
 }
 
 /* Returns the length of str until the first occurance of end or NULL. */
@@ -63,7 +67,7 @@ static char	**split(const char *stritr, char c, char **indices, size_t size)
 	if (size > 0)
 	{
 		len = strlenuntil(stritr, c);
-		strldup(&indices[0], stritr, len);
+		indices[0] = strldup(stritr, len);
 		if (indices[0] == NULL)
 			return (NULL);
 	}
@@ -75,7 +79,7 @@ static char	**split(const char *stritr, char c, char **indices, size_t size)
 			len = strlenuntil(stritr + 1, c);
 			if (len == 0)
 				continue ;
-			strldup(&indices[size - 1], stritr + 1, len);
+			indices[size - 1] = strldup(stritr + 1, len);
 			if (indices[size - 1] == NULL)
 				return (NULL);
 		}
@@ -89,17 +93,30 @@ static char	**split(const char *stritr, char c, char **indices, size_t size)
  * Points to the first location of text after single/contiguous end characters.
  * Last element in the array is a NULL pointer.
  */
-char	**ft_split(char const *str, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**indices;
 	size_t	size;
+	char	**ind2;
+	char	*s1;
 
-	size = find_grouped_occurances(str, c);
+	s1 = (char *)s;
+	size = (*s != c && *s);
+	while (*s1 && *(s1 + 1))
+	{
+		if (*s1 == c && *(s1 + 1) != c)
+			size++;
+		s1++;
+	}
 	indices = (char **)ft_calloc(size + 1, sizeof(char *));
 	if (indices == NULL)
 		return (NULL);
 	else if (size > 0)
-		split((char *)str, c, indices, 0);
+	{
+		ind2 = split((char *)s, c, indices, 0);
+		if (ind2 == NULL || ind2[0] == NULL)
+			return (cleanup(indices));
+	}
 	indices[size] = NULL;
 	return (indices);
 }
