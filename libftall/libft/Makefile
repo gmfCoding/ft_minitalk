@@ -47,7 +47,7 @@ SRCSB =	ft_lstnew.c			\
 		ft_lstmap.c
 
 
-SRCS = $(SRCS1) $(SRCSB)
+SRCS = $(SRCS1) $(SRCS2) $(SRCSB)
 NAME = libft.a
 INCS = ../libft.h
 OBJDIR = obj/

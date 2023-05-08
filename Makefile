@@ -1,6 +1,6 @@
 INC = common.h
 
-CSRCS = src/common.c src/ft_bzero.c src/ft_itoa.c src/ft_calloc.c src/ft_putnbr_fd.c src/utils.c
+CSRCS = common.c
 P1SRCS = client.c
 P2SRCS = server.c
 
@@ -11,18 +11,23 @@ P2OBJS = $(P2SRCS:.c=.o)
 P1NAME = client
 P2NAME = server
 
-CFLAGS = -I./ $(DFLAGS) -g
+LIBFTALL = libftall/libftall.a
+
+LFLAGS = -Llibftall -lftall
+CFLAGS = -I./ -I./libftall $(DFLAGS)
 #-Wall -Werror -Wextra
 CC = cc
 
 all: $(P1NAME) $(P2NAME)
 
+$(LIBFTALL):
+	make -s -C libftall
 
 $(P1NAME): $(P1OBJS) $(COBJS)
-	$(CC) $(P1OBJS) $(COBJS) $(CFLAGS) -o $(P1NAME)
+	$(CC) $(LFLAGS) $(P1OBJS) $(COBJS) $(CFLAGS) -o $(P1NAME)
 
 $(P2NAME): $(P2OBJS) $(COBJS)
-	$(CC) $(P2OBJS) $(COBJS) $(CFLAGS) -o $(P2NAME)
+	$(CC) $(LFLAGS) $(P2OBJS) $(COBJS) $(CFLAGS) -o $(P2NAME)
 
 %.o: %.c $(INC)
 	$(CC) $(CFLAGS) -o $@ -c $<  

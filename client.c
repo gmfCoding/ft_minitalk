@@ -6,12 +6,12 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:33:03 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 20:16:12 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/05 17:04:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
 #include <unistd.h>
 #include "libft.h"
+#include "ft_printf.h"
 #include "common.h"
 
 static int acknowledged(int ack)
@@ -26,7 +26,7 @@ static void	c_recv_byte(char byte, int pid)
 {
 	if (byte == MSG_ACK)
 	{
-		ft_putstr("Message Sent Successfully!\n");
+		ft_printf("Message Sent Successfully!\n");
 		acknowledged(1);
 	}
 }
@@ -41,11 +41,7 @@ int	main(int argc, char **argv)
 	on_byte_func(c_recv_byte);
 	setup_recv(NULL);
 
-	ft_putstr("Message Client: ");
-	ft_putnbr_fd(getpid(), 1);
-	ft_putstr("\t BAUD:");
-	ft_putnbr_fd(BAUD_RATE, 1);
-	ft_putstr("\n");
+	ft_printf("Message Client: %d\t BAUD:%d\n", getpid(), BAUD_RATE);
 	
 	pid = ft_atoi(argv[1]);
 	str = argv[2];

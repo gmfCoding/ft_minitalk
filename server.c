@@ -6,13 +6,14 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:33:48 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 20:19:41 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/05 17:05:50 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
+#include <stdlib.h>
+#include "ft_printf.h"
 #include "common.h"
 #include "libft.h"
-
 //#include <stdio.h>
 // void print_byte(char byte)
 // {
@@ -48,11 +49,7 @@ int	main(int argc, char **argv)
 	on_byte_func(s_recv_byte);
 	setup_recv(NULL);
 
-	ft_putstr("Message Server: ");
-	ft_putnbr_fd(getpid(), 1);
-	ft_putstr("\t BAUD:");
-	ft_putnbr_fd(BAUD_RATE, 1);
-	ft_putstr("\n");
+	ft_printf("Message Server: %d\t BAUD:%d\n", getpid(), BAUD_RATE);
 	while (1)
 	{
 		usleep(100);

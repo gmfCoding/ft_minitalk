@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:43 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 20:20:45 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/05 17:08:56 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,8 @@ void				recv_bit(char bit, int pid, void (*on_byte)(char, int));
 void				recv_low(int pid, void (*on_byte)(char, int));
 void				recv_high(int pid, void (*on_byte)(char, int));
 
-
-
 typedef void (*t_bytefunc)(char, int);
 t_bytefunc	on_byte_func(t_bytefunc on_byte);
 
 struct sigaction setup_recv(void (*a)(int, siginfo_t *, void *));
-
-
 #endif
