@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:34:43 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/05 17:08:56 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/08 19:24:16 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define BIT_HIGH SIGUSR2
 
 # ifndef BAUD_RATE
-#  define BAUD_RATE 10000
+#  define BAUD_RATE 6600
 # endif
 
 # define MSG_ACK 0x006
