@@ -35,8 +35,10 @@ $(P2NAME): $(P2OBJS) $(COBJS)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -f $(COBS)
-	make -s -C libftall clean
+	-rm $(P1OBJS)
+	-rm $(P2OBJS)
+	-rm $(COBJS)
+	@make -s -C libftall clean
 
 fclean: clean
 	make -s -C libftall fclean
