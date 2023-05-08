@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:33:03 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/05 17:04:34 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/08 19:34:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -14,9 +14,10 @@
 #include "ft_printf.h"
 #include "common.h"
 
-static int acknowledged(int ack)
+static int	acknowledged(int ack)
 {
-	static int info;
+	static int	info;
+
 	if (ack)
 		info = 1;
 	return (info);
@@ -40,9 +41,7 @@ int	main(int argc, char **argv)
 		return (-1);
 	on_byte_func(c_recv_byte);
 	setup_recv(NULL);
-
 	ft_printf("Message Client: %d\t BAUD:%d\n", getpid(), BAUD_RATE);
-	
 	pid = ft_atoi(argv[1]);
 	str = argv[2];
 	while (*str)

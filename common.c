@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:38:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/04 20:22:09 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/08 19:33:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <signal.h>
@@ -52,11 +52,11 @@ void	recv_bit(char bit, int pid, void (*on_byte)(char, int))
  * */
 t_bytefunc	on_byte_func(t_bytefunc on_byte)
 {
-	static t_bytefunc event;
+	static t_bytefunc	event;
 
 	if (on_byte != NULL)
 		event = on_byte;
-	return event;
+	return (event);
 }
 
 /* Default implementation for recieve bits:
@@ -74,16 +74,16 @@ static void	d_recv_bit(int sig, siginfo_t *info, void *context)
  * When a is NULL it uses the d_recv_bit.
  * Otherwise it uses the supplied 'func' as the bit/sig callback callback.
  */
-struct sigaction setup_recv(void (*func)(int, siginfo_t *, void *))
+struct sigaction	setup_recv(void (*func)(int, siginfo_t *, void *))
 {
 	static struct sigaction	sa;
-    
-    sa.sa_flags = SA_SIGINFO;
+
+	sa.sa_flags = SA_SIGINFO;
 	if (func != NULL)
 		sa.sa_sigaction = func;
 	else
-    	sa.sa_sigaction = d_recv_bit;
-    sigaction(BIT_LOW, &sa, NULL);
-    sigaction(BIT_HIGH, &sa, NULL);
+		sa.sa_sigaction = d_recv_bit;
+	sigaction(BIT_LOW, &sa, NULL);
+	sigaction(BIT_HIGH, &sa, NULL);
 	return (sa);
 }
