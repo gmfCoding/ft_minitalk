@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:33:48 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/08 19:28:20 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/08 20:32:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -23,8 +23,9 @@ static void	s_recv_byte(char byte, int pid)
 		write(1, &byte, 1);
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
+	
 	on_byte_func(s_recv_byte);
 	setup_recv(NULL);
 	ft_printf("Message Server: %d\t BAUD:%d\n", getpid(), BAUD_RATE);

@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:33:03 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/08 19:34:47 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/08 20:31:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -25,6 +25,7 @@ static int	acknowledged(int ack)
 
 static void	c_recv_byte(char byte, int pid)
 {
+	(void)pid;
 	if (byte == MSG_ACK)
 	{
 		ft_printf("Message Sent Successfully!\n");

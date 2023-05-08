@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:38:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/08 19:33:10 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/08 20:32:11 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <signal.h>
@@ -64,6 +64,7 @@ t_bytefunc	on_byte_func(t_bytefunc on_byte)
  */
 static void	d_recv_bit(int sig, siginfo_t *info, void *context)
 {
+	(void)context;
 	if (sig == BIT_LOW)
 		recv_bit(0, info->si_pid, on_byte_func(NULL));
 	if (sig == BIT_HIGH)
